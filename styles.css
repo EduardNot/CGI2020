@@ -1,0 +1,58 @@
+* {
+    margin: 2px auto;
+    text-align: center;
+}
+
+*:not(div):not(#mapDiv):not(button):not(input) {
+    background: #eeeeee;
+    /*color: black;*/
+}
+
+main {
+    padding-top: 2rem;
+}
+
+.columnLeft {
+    flex: 50%;
+    display: flex;
+}
+
+.columnRight {
+    flex: 50%;
+    padding-top: 1%;
+    padding-left: 5rem;
+}
+
+.columnRight div {
+    text-align: left;
+}
+
+.row {
+    display: flex;
+}
+
+.columnLeft .toLeft {
+    flex: 60%;
+}
+
+.columnLeft .toRight {
+    flex: 40%;
+}
+
+#chartDiv {
+    display: flex;
+}
+
+.chartSmall {
+    flex: 5%;
+}
+
+.chartBig {
+    flex: 90%;
+}
+
+#chart {
+    display: none;
+    resize: both;
+    overflow: auto;
+}
