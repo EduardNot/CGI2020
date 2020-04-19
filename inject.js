@@ -58,11 +58,17 @@ function getSunStatusSingle(latitude, longitude, fromDate) {
     if (latitude >= -90 && latitude <= 90 && longitude >= -180 && longitude <= 180 && latitude !== "" && longitude !== "") {
         let coordinates = ol.proj.fromLonLat([longitude, latitude], 'EPSG:4326');
         document.getElementById("coordinates").innerText = coordinates[1].toFixed(2) + ", " + coordinates[0].toFixed(2);
-        let sun = SunCalc.getTimes(fromDate, coordinates[1], coordinates[0]);
-        document.getElementById("sunrise").innerText = sun.sunrise;
-        document.getElementById("sunset").innerText = sun.sunset;
-        // https://stackoverflow.com/questions/19225414/how-to-get-the-hours-difference-between-two-date-objects
-        document.getElementById("duration").innerText = (Math.abs(sun.sunset - sun.sunrise) / 36e5).toFixed(2);
+        let sun = SunCalc.getTimes(fromDate, latitude, longitude);
+        if (sun.sunrise.toString().localeCompare("Invalid Date") || sun.sunset.toString().localeCompare("Invalid Date")) {
+            document.getElementById("sunrise").innerText = sun.sunrise;
+            document.getElementById("sunset").innerText = sun.sunset;
+            // https://stackoverflow.com/questions/19225414/how-to-get-the-hours-difference-between-two-date-objects
+            document.getElementById("duration").innerText = (Math.abs(sun.sunset - sun.sunrise) / 36e5).toFixed(2) + " hours";
+        } else {
+            document.getElementById("sunrise").innerText = "Sun does not rise";
+            document.getElementById("sunset").innerText = "Sun does not set";
+            document.getElementById("duration").innerText = "24" + " hours";
+        }
         console.log(sun.sunrise);
     } else {
         document.getElementById("coordinates").innerText = "Invalid input";
