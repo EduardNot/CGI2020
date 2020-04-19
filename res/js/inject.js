@@ -1,9 +1,14 @@
+// Submit button function
 function submit() {
+    // Getting coordinates from the input boxes
     let latitude = document.getElementById("latitude").value;
     let longitude = document.getElementById("longitude").value;
+
+    // Checking if in range
     if (latitude >= -90 && latitude <= 90 && longitude >= -180 && longitude <= 180 && latitude !== "" && longitude !== "") {
         moveTo(latitude, longitude);
     }
+    // Checking if date range is provided
     if (document.getElementById("toDate").value.length === 0) {
         dateSingle(latitude, longitude)
     } else {
@@ -12,6 +17,8 @@ function submit() {
 }
 
 function coordinateFromMap(latitude, longitude) {
+    // Function that gets coordinates from the map
+    // Checking if date range is provided
     if (document.getElementById("toDate").value.length === 0) {
         dateSingle(latitude, longitude)
     } else {
@@ -20,15 +27,19 @@ function coordinateFromMap(latitude, longitude) {
 }
 
 function clearFrom() {
+    // Clears from date input
     document.getElementById("fromDate").valueAsDate = null;
 }
 
 function clearTo() {
+    // Clears from to input
     document.getElementById("toDate").valueAsDate = null;
 }
 
 function dateSingle(latitude, longitude) {
+    // Function that handles if only one date is provided
     let fromDate = document.getElementById("fromDate");
+    //Checking if date is provided, if not, assigns today date
     if (fromDate.value.length === 0) {
         fromDate = new Date();
     } else {
@@ -38,8 +49,10 @@ function dateSingle(latitude, longitude) {
 }
 
 function dateMultiple(latitude, longitude) {
+    // Function that handles if multiple dates are provided
     let fromDate = document.getElementById("fromDate");
     let toDate = document.getElementById("toDate");
+    //Checking if date is provided, if not, assigns today date
     if (fromDate.value.length === 0) {
         fromDate = new Date();
     } else {
@@ -52,13 +65,19 @@ function dateMultiple(latitude, longitude) {
 }
 
 function getSunStatusSingle(latitude, longitude, fromDate) {
-    // let test = fromDate.toISOString().split(/[A-Z]/);
+    // Function to display information, if only one date is provided
+    // Parsing numbers to string -> float
     latitude = parseFloat(latitude);
     longitude = parseFloat(longitude);
+    //Checking if coordinates are correct
     if (latitude >= -90 && latitude <= 90 && longitude >= -180 && longitude <= 180 && latitude !== "" && longitude !== "") {
+        // Conversion
         let coordinates = ol.proj.fromLonLat([longitude, latitude], 'EPSG:4326');
+        // Displaying coordinates for user
         document.getElementById("coordinates").innerText = coordinates[1].toFixed(2) + ", " + coordinates[0].toFixed(2);
+        // Calculating sun related information
         let sun = SunCalc.getTimes(fromDate, latitude, longitude);
+        // Checking if current location is not polar day
         if (sun.sunrise.toString().localeCompare("Invalid Date") || sun.sunset.toString().localeCompare("Invalid Date")) {
             document.getElementById("sunrise").innerText = sun.sunrise;
             document.getElementById("sunset").innerText = sun.sunset;
@@ -76,8 +95,11 @@ function getSunStatusSingle(latitude, longitude, fromDate) {
 }
 
 function getSunStatusMultiple(latitude, longitude, fromDate, toDate) {
+    // Function to display information, if only one date is provided
+    // Parsing numbers to string -> float
     latitude = parseFloat(latitude);
     longitude = parseFloat(longitude);
+    // Checking if provided is correctly inputted, i.e. from date is before than to date
     if (fromDate > toDate) {
         alert("Please put dates correctly, i.e. first date must be before than second date.");
     } else if (latitude >= -90 && latitude <= 90 && longitude >= -180 && longitude <= 180 && latitude !== "" && longitude !== "") {
@@ -89,7 +111,12 @@ function getSunStatusMultiple(latitude, longitude, fromDate, toDate) {
         for (let i = fromDate; i <= toDate; i.setDate(i.getDate() + 1)) {
             labelArr.push(i.toDateString());
             let sun = SunCalc.getTimes(fromDate, latitude, longitude);
-            durationArr.push((Math.abs(sun.sunset - sun.sunrise) / 36e5).toFixed(2));
+            // Checking if current location is not polar day
+            if (sun.sunrise.toString().localeCompare("Invalid Date") || sun.sunset.toString().localeCompare("Invalid Date")) {
+                durationArr.push((Math.abs(sun.sunset - sun.sunrise) / 36e5).toFixed(2));
+            } else {
+                durationArr.push(24);
+            }
         }
         drawChart(labelArr, durationArr);
         toggelMap();
@@ -100,6 +127,7 @@ function getSunStatusMultiple(latitude, longitude, fromDate, toDate) {
 }
 
 function toggelMap() {
+    // Function to hide/show map
     let map = document.getElementById("map");
     if (map.style.display === "none") {
         map.style.display = "block";
