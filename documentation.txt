@@ -1,0 +1,21 @@
+Etapp 1: Kulus aega umbes kaks(neli-viis kui võta arvese bugide eemaldamise) tundi, ma algul jätsin c osa lõpu poole, kui ma sain kaardi implementeeritud. 
+Suuri raskusi ei olnud, üks asi, mis tuleb pähe on, et oli vaja mõelda, kuidas veebileht lõpuks näeks välja ja oleks kasutajale mugavam. Samuti, see koordinaatide formaat oli algul võõras.
+
+Etapp 2: Kaardi implemetatsioon võtis umbes kaks. Raskus oli siin see, et ei olnud kunagi kaardidega tegelenud, seega pidin lugema, kuidas kaarti implementeerida.
+Abi sain siit https://openlayers.org/en/latest/doc/quickstart.html ja https://www.youtube.com/watch?v=SFiNibl0F5U&list=PLSWT7gmk_6LrvfkAFzfBpNckEsaF7S2GB
+
+Etapp 3: Kulus aega kuni kaks tundi, siin raskusi ei olnud, sest oli põhimõtteliselt sama loogika implementeerimisel nagu kaardil. Algul oli üks bug, et ma ei kustutanud eelmise graafi ära, seega kuvasin iga kord uue peale, mis võtis mälu.
+Abi sain siit https://www.chartjs.org/docs/latest/
+
+Etapp 4: Aega kulu tund ja pool. Natuke jamasin siin veebilehe ilusa tegemiseks. Raskusi ei olnud, sest suurem osa töö oli css-is.
+
+
+Suurem raskus ja ajakulu läks bugide eemaldamisele ja, et kõik funktsioonid töötaksid ilusti koos.
+Etapp 1 võtiski kõige rohkem aega, sest kõik etappid suunasid esimesse etappi, sest see oli kõige tähtsam.
+
+Koodis on kommentaarid, kus on kirjas, mida funktsioon/käsk peaks tegema.
+
+Siin on juhised, mis eraldi lehel:
+    You can input coordinates from the map, for that you need first input the date(s).
+    To first date input(from date) can be empty, it will set today as date automatically.
+    To get a graph, the to date needs to be put in.
